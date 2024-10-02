@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+**/bin
+**/.idea
+**/.mvn
+**/.vscode
+.DS_Store
+.devcontainer/devcontainer.json
+.env
+local/.env
