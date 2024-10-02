@@ -1,0 +1,14 @@
+services:
+  article-postgres:
+    image: postgres:13.11-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: articles
+      POSTGRES_USER: articles-user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 10100:5432
+    volumes:
+      - type: bind
+        source: migrations
+        target: /docker-entrypoint-initdb.d

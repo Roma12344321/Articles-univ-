@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit Article</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Articles</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/articles">Все статьи</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Edit Article</h4>
+        </div>
+        <div class="card-body">
+            <!-- Форма для редактирования статьи -->
+            <form th:action="@{/articles/edit/{id}(id=${article.id})}" th:object="${article}" method="post">
+                <div class="form-group">
+                    <label for="name">Article Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter article name" required>
+                </div>
+                <div class="form-group">
+                    <label for="text">Article Text</label>
+                    <textarea class="form-control" id="text" rows="5" th:field="*{text}" placeholder="Enter article text" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="person">Author</label>
+                    <input type="text" class="form-control" id="person" th:value="${article.person.username}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="createdAt">Created At</label>
+                    <input type="text" class="form-control" id="createdAt" th:value="${#dates.format(article.createdAt, 'dd MMMM yyyy HH:mm')}" disabled>
+                </div>
+
+                <!-- Кнопки сохранения и отмены -->
+                <div class="text-right">
+                    <a th:href="'/articles/'+${article.id}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies (optional but recommended) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

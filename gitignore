@@ -1,0 +1,7 @@
+**/bin
+**/.idea
+**/.vscode
+.DS_Store
+.devcontainer/devcontainer.json
+.env
+local/.env
