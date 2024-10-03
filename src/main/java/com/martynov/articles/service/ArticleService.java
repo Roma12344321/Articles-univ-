@@ -3,6 +3,7 @@ package com.martynov.articles.service;
 import com.martynov.articles.models.Article;
 import com.martynov.articles.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,11 @@ public class ArticleService {
 
     @Transactional
     public Article findById(int id) {
-        return articleRepository.findById(id).orElse(null);
+        var article = articleRepository.findById(id).orElse(null);
+        if (article!=null) {
+            Hibernate.initialize(article.getComments());
+        }
+        return article;
     }
 
     @Transactional

@@ -33,6 +33,7 @@
 </header>
 
 <div class="container mt-5">
+    <!-- Статья -->
     <div class="card">
         <div class="card-header">
             <h4 class="card-title" th:text="${article.name}">Article Name</h4>
@@ -55,6 +56,41 @@
             <form th:if="${article.getPerson().getUsername().equals(person.username)}" th:action="@{/articles/{id}(id=${article.id})}" th:method="delete" class="d-inline">
                 <input type="hidden" name="_method" value="delete" />
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this article?');">Delete Article</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Комментарии -->
+    <div class="mt-5">
+        <h5>Комментарии:</h5>
+        <div th:each="comment : ${article.comments}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text" th:text="${comment.text}">Комментарий</p>
+                    <p class="text-muted">
+                        <strong>Author:</strong> <span th:text="${comment.person.username}">Username</span> |
+                        <strong>Posted:</strong> <span th:text="${#dates.format(comment.createdAt, 'dd MMMM yyyy HH:mm')}">Created Date</span>
+                    </p>
+                    <!-- Опции для редактирования и удаления комментария для автора -->
+                    <div th:if="${comment.person.username == person.username}">
+                        <a th:href="@{/comment/edit/{id}(id=${comment.id})}" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form th:action="@{/comment/{id}(id=${comment.id})}" th:method="delete" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма для добавления комментария -->
+        <div class="mt-4">
+            <h5>Добавить комментарий:</h5>
+            <form  th:action="@{/comment/{id}(id=${article.id})}" th:object="${comment}" method="post">
+                <div class="form-group">
+                    <label for="commentText">Комментарий:</label>
+                    <textarea class="form-control" id="commentText" th:field="*{text}" rows="3" placeholder="Введите комментарий"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Добавить комментарий</button>
             </form>
         </div>
     </div>

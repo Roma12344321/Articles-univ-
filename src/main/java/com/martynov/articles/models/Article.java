@@ -39,4 +39,7 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
+
+    @OneToMany(mappedBy = "article")
+    private List<Comment> comments;
 }

@@ -1,6 +1,7 @@
 package com.martynov.articles.controllers;
 
 import com.martynov.articles.models.Article;
+import com.martynov.articles.models.Comment;
 import com.martynov.articles.service.ArticleService;
 import com.martynov.articles.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable int id, Model model) {
+    public String show(@PathVariable int id, Model model, @ModelAttribute("comment") Comment comment) {
         var article = articleService.findById(id);
         model.addAttribute("article", article);
         model.addAttribute("person", personService.getCurrentPerson());
@@ -55,7 +56,7 @@ public class ArticleController {
 
     @PostMapping("/edit/{id}")
     public String edit(@PathVariable int id, @ModelAttribute("article") Article article) {
-        articleService.update(id,article);
+        articleService.update(id, article);
         return "redirect:/articles/" + id;
     }
 
