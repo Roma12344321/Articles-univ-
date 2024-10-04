@@ -16,7 +16,7 @@ public class CommentController {
     @PostMapping("/{id}")
     public String create(@ModelAttribute("comment") Comment comment, @PathVariable("id") int id) {
         commentService.save(comment, id);
-        return "redirect:/articles/" + comment.getArticle().getId();
+        return "redirect:/articles/"+id;
     }
 
     @DeleteMapping("/{id}")
@@ -34,7 +34,6 @@ public class CommentController {
     @PostMapping("/edit/{id}")
     public String edit(@PathVariable int id, @ModelAttribute Comment comment) {
         commentService.edit(id, comment);
-        var articleId = commentService.findById(id).getArticle().getId();
-        return "redirect:/articles/" + articleId;
+        return "redirect:/articles";
     }
 }
